@@ -10,10 +10,11 @@ A Python tool to automatically scrape and track foreclosure property listings fr
 - Stores data in Airtable
 - Implements caching to reduce server load
 - Handles both new properties and updates
+- Automated daily updates via GitHub Actions
 
 ## Prerequisites
 
-Before you begin, ensure you have the following installed:
+Before you begin, ensure you have the following:
 
 1. **Python 3.8 or higher**
    - Download from [Python's official website](https://www.python.org/downloads/)
@@ -38,7 +39,7 @@ Before you begin, ensure you have the following installed:
      * Attorney Phone (Single line text)
      * Status History (Long text)
 
-## Installation
+## Local Installation
 
 1. **Clone the repository**
    ```bash
@@ -70,15 +71,30 @@ Before you begin, ensure you have the following installed:
      AIRTABLE_API_KEY=your_api_key_here
      ```
 
-## Configuration
+## GitHub Actions Setup
 
-1. Open `config.py` and update the following:
-   ```python
-   BASE_ID = "your_airtable_base_id"
-   TABLE_ID = "your_airtable_table_id"
-   ```
+The repository includes a GitHub Actions workflow that runs the scraper automatically every 24 hours. To set this up:
 
-## Usage
+1. **Fork the repository** to your GitHub account
+
+2. **Add GitHub Secret**
+   - Go to your repository's Settings
+   - Click on "Secrets and variables" → "Actions"
+   - Click "New repository secret"
+   - Name: `AIRTABLE_API_KEY`
+   - Value: Your Airtable API key
+   - Click "Add secret"
+
+3. **Enable GitHub Actions**
+   - Go to the "Actions" tab in your repository
+   - Click "I understand my workflows, go ahead and enable them"
+
+The scraper will now run automatically every day at midnight UTC (7:00 PM EST). You can also:
+- Manually trigger the workflow from the Actions tab
+- View run history and logs
+- Download log files from each run
+
+## Local Usage
 
 1. **Activate the virtual environment** (if not already activated)
    ```bash
@@ -129,6 +145,18 @@ The script will:
      ```bash
      pip install -r requirements.txt
      ```
+
+### GitHub Actions Issues
+
+1. **Workflow Not Running**
+   - Check if Actions is enabled in your repository
+   - Verify the AIRTABLE_API_KEY secret is set correctly
+   - Check the workflow file syntax in `.github/workflows/daily_scrape.yml`
+
+2. **Workflow Failing**
+   - Check the workflow run logs in the Actions tab
+   - Download the log artifact for detailed error messages
+   - Verify Chrome is installing correctly in the workflow
 
 ### Getting Help
 

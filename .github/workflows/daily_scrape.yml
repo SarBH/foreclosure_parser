@@ -1,0 +1,45 @@
+name: Daily Property Scraping
+
+on:
+  schedule:
+    # Runs at 00:00 UTC every day (7:00 PM EST)
+    - cron: '0 0 * * *'
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.8'
+        
+    - name: Set up Chrome
+      uses: browser-actions/setup-chrome@latest
+      with:
+        chrome-version: stable
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Create cache directory
+      run: mkdir -p property_details_cache
+      
+    - name: Run scraper
+      env:
+        AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+      run: python run.py
+      
+    - name: Upload logs
+      if: always()  # Upload logs even if the scraper fails
+      uses: actions/upload-artifact@v3
+      with:
+        name: scraper-logs
+        path: property_scraper.log
+        retention-days: 7  # Keep logs for 7 days
