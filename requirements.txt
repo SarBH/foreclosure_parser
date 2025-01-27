@@ -1,0 +1,11 @@
+# Web scraping
+selenium>=4.0.0
+beautifulsoup4>=4.9.3
+webdriver-manager>=3.8.0
+
+# Data handling
+pyairtable>=2.0.0
+pyyaml>=6.0.0
+
+# Environment variables
+python-dotenv>=1.0.0
