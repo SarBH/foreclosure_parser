@@ -4,7 +4,7 @@ import logging
 from bs4 import BeautifulSoup
 import yaml
 from pyairtable import Api
-
+import json
 from .config import airtable_config, property_fields
 from .utils import parse_monetary_value
 
@@ -152,7 +152,7 @@ class AirtableManager:
             details.get(property_fields.GOOD_FAITH_UPSET)
         )
         
-        return {
+        full_details = {
             "Sheriff Number": details[property_fields.SHERIFF_NUMBER],
             "Case Number": details.get(property_fields.CASE_NUMBER),
             "Address": details.get(property_fields.ADDRESS),
@@ -166,7 +166,9 @@ class AirtableManager:
             "Attorney Phone": details.get(property_fields.ATTORNEY_PHONE),
             "Status History": yaml.dump(status_history)
         }
-        
+        logger.debug(json.dumps(full_details))
+        return full_details
+
     def _create_record(self, sheriff_number: str, record_data: Dict) -> None:
         """Create a new record in Airtable."""
         self.table.create(record_data)

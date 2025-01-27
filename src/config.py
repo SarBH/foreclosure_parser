@@ -41,7 +41,7 @@ class PropertyFields:
     PLAINTIFF: Final[str] = "Plaintiff"
     DEFENDANT: Final[str] = "Defendant"
     DESCRIPTION: Final[str] = "Description"
-    JUDGMENT_AMOUNT: Final[str] = "Judgment Amount*"
+    JUDGMENT_AMOUNT: Final[str] = "Judgment"
     GOOD_FAITH_UPSET: Final[str] = "Good Faith Upset*"
     ATTORNEY: Final[str] = "Attorney"
     ATTORNEY_PHONE: Final[str] = "Attorney Phone"

@@ -25,7 +25,7 @@ if __name__ == "__main__":
     
     # Import and run main after environment checks
     try:
-        from main import main
+        from src.main import main
         main()
     except ImportError as e:
         print(f"Error: Failed to import required modules. Please run 'pip install -r requirements.txt' first")
